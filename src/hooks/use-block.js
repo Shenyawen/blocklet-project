@@ -3,6 +3,7 @@
 import { message } from 'antd';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useRequest, useCreation, useMemoizedFn } from 'ahooks';
+import useSorter from './use-sorter';
 import usePagination from './use-pagination';
 import { formatBlockAbstract, formatBlockTransaction } from '../utils/format';
 
@@ -77,9 +78,11 @@ function useBlock() {
 
   const [abstract, transaction] = useOrganizeBlock(block);
 
-  const [paginateTransaction, pagination] = usePagination(transaction);
+  const [sorterTransaction, sorter] = useSorter(transaction);
 
-  return [loading, { abstract, transaction: paginateTransaction, pagination, onSearch, onSwitchBlock }];
+  const [paginateTransaction, pagination] = usePagination(sorterTransaction);
+
+  return [loading, { sorter, abstract, transaction: paginateTransaction, pagination, onSearch, onSwitchBlock }];
 }
 
 export default useBlock;

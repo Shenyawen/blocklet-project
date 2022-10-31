@@ -80,6 +80,9 @@ export const formatBlockTransaction = (transaction) => {
       amount: formatSAT2Btc(amount),
       fee: `${formatSAT2Btc(fee)} BTC`,
       time: formatDate(time),
+      transactionDate: Number(time),
+      transactionFee: Number(fee),
+      transactionAmount: Number(amount),
     };
   });
 };

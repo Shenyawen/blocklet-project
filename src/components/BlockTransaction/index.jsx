@@ -1,6 +1,8 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-array-index-key */
 import PropTypes from 'prop-types';
-import { Space, Collapse, Pagination, Row, Col, Typography } from 'antd';
+import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
+import { Space, Button, Collapse, Pagination, Row, Col, Typography } from 'antd';
 import TransactionItem from './TransactionItem';
 import './index.less';
 
@@ -35,11 +37,50 @@ BlockTransactioItemHeader.propTypes = {
   amount: PropTypes.string.isRequired,
 };
 
+function SorterAction({ title, sorterKey, currentSorter, direction, onSorterChange }) {
+  return (
+    <Button type={currentSorter === sorterKey && 'primary'} onClick={() => onSorterChange(sorterKey)}>
+      {title}
+      {direction === 'asc' && currentSorter === sorterKey && <CaretUpOutlined />}
+      {direction === 'desc' && currentSorter === sorterKey && <CaretDownOutlined />}
+    </Button>
+  );
+}
+
 // 交易记录
-function BlockTransaction({ pagination, transaction }) {
+function BlockTransaction({ sorter, pagination, transaction }) {
+  const { sorterKey, direction, onSorterChange } = sorter;
+
   return (
     <div className="block-transaction">
-      <h1 className="block-transaction__title">交易</h1>
+      <Row className="block-transaction__title">
+        <Col flex="auto">交易明细</Col>
+        <Col className="block-transaction__sorter">
+          <Space>
+            <SorterAction
+              title="创建日期"
+              sorterKey="transactionDate"
+              direction={direction}
+              currentSorter={sorterKey}
+              onSorterChange={onSorterChange}
+            />
+            <SorterAction
+              title="交易金额"
+              sorterKey="transactionAmount"
+              direction={direction}
+              currentSorter={sorterKey}
+              onSorterChange={onSorterChange}
+            />
+            <SorterAction
+              title="手续费"
+              sorterKey="transactionFee"
+              direction={direction}
+              currentSorter={sorterKey}
+              onSorterChange={onSorterChange}
+            />
+          </Space>
+        </Col>
+      </Row>
       <Space size={24} direction="vertical" className="block-transaction__list">
         {transaction.map((item, index) => {
           const { hash, inputs, out } = item;
@@ -60,6 +101,7 @@ function BlockTransaction({ pagination, transaction }) {
 }
 
 BlockTransaction.propTypes = {
+  sorter: PropTypes.object.isRequired,
   pagination: PropTypes.object.isRequired,
   transaction: PropTypes.array.isRequired,
 };
