@@ -2,9 +2,11 @@ html,
 body {
   padding: 0;
   margin: 0;
+  background-color: #f9f9f9 !important;
 }
 .app {
-  text-align: center;
+  padding: 10px 20px;
+  background-color: transparent;
 }
 
 .app-logo {

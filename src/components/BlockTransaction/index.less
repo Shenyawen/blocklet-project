@@ -1,0 +1,61 @@
+.block-transaction {
+  padding: 0 24px;
+  background-color: #fff;
+  margin-top: 24px;
+  border-radius: 8px;
+  &__title {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 60px;
+  }
+  &__list {
+    width: 100%;
+
+    .block-transactio-item__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      &__brief {
+        display: flex;
+        align-items: center;
+        &__date {
+          margin-left: 20px;
+          color: #7b8293;
+        }
+      }
+    }
+  }
+  .transaction-item {
+    &__row {
+      display: flex;
+      &__cells {
+        flex: 1;
+      }
+      &__cell {
+        display: flex;
+        margin-bottom: 12px;
+        justify-content: space-between;
+        &__address {
+          color: #004cff;
+        }
+        &__value {
+          color: red;
+        }
+      }
+    }
+  }
+  &__pagination {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 20px 0;
+  }
+}
+
+.ant-collapse-header {
+  width: 100%;
+  background-color: #f5f6fa;
+}
+.ant-collapse-header-text {
+  flex: 1 !important;
+  overflow: hidden;
+}

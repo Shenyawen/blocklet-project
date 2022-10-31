@@ -1,21 +1,20 @@
-import { Link } from 'react-router-dom';
-
-import logo from '../logo.svg';
+import { Spin } from 'antd';
+import BlockSearch from '../components/BlockSearch';
+import BlockAbstract from '../components/BlockAbstract';
+import BlockTransaction from '../components/BlockTransaction';
+import useBlock from '../hooks/use-block';
 
 function Home() {
+  const [loading, { abstract, transaction, pagination, onSearch, onSwitchBlock }] = useBlock();
+
   return (
-    <header className="app-header">
-      <img src={logo} className="app-logo" alt="logo" />
-      <pre style={{ textAlign: 'left' }}>
-        <code>window.blocklet = {JSON.stringify(window.blocklet, null, 2)}</code>
-      </pre>
-      <Link className="app-link" to="/about">
-        About
-      </Link>
-      <a className="app-link" href="https://docs.arcblock.io/abtnode/" target="_blank" rel="noopener noreferrer">
-        Learn Blocklet
-      </a>
-    </header>
+    <div className="home">
+      <BlockSearch loading={loading} onSearch={onSearch} />
+      <Spin spinning={loading} tip="正在获取区块信息...">
+        <BlockAbstract abstract={abstract} onSwitchBlock={onSwitchBlock} />
+        <BlockTransaction transaction={transaction} pagination={pagination} />
+      </Spin>
+    </div>
   );
 }
 
